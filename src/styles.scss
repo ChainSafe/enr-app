@@ -1,0 +1,41 @@
+@charset "utf-8";
+@import "~bulma/bulma";
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+// .definition {
+//     code {
+//         font-size: 0.8em;
+//         word-wrap: break-word;
+//         word-break: break-all;
+//         display: inline-block;
+//     }
+//     .field-label {
+//         text-align: left;
+//
+//         .label {
+//             color: #777;
+//
+//             &.def-header {
+//                 text-decoration: underline;
+//             }
+//         }
+//     }
+// }
+
+._loading_overlay_overlay {
+  position: fixed !important;
+}
+
+._loading_overlay_wrapper {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
