@@ -16,12 +16,6 @@ export default function(): JSX.Element {
             @chainsafe/discv5 {pkg.dependencies["@chainsafe/discv5"]}
           </a>
         </div>
-        <div>
-          <a className='is-link has-text-grey'
-            href='https://www.npmjs.com/package/@chainsafe/lodestar-types'>
-            @chainsafe/lodestar-types {pkg.dependencies["@chainsafe/lodestar-types"]}
-          </a>
-        </div>
       </div>
     </footer>
   );
