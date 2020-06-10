@@ -7,7 +7,7 @@ export default function(): JSX.Element {
     <footer className='footer'>
       <div className='content has-text-centered'>
         Made with ❤️ by <a className='is-link has-text-danger is-family-code' href='https://chainsafe.io'>ChainSafe Systems</a><br/>
-        and <a className='is-link has-text-danger is-family-code' href='https://github.com/ChainSafe/simpleserialize.com/graphs/contributors'>ETH 2.0 friends</a>
+        and <a className='is-link has-text-danger is-family-code' href='https://github.com/ChainSafe/enr-app/graphs/contributors'>ETH 2.0 friends</a>
       </div>
       <div className='content has-text-centered is-small is-family-code'>
         <div>
