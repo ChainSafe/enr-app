@@ -12,8 +12,8 @@ export default function(): JSX.Element {
       <div className='content has-text-centered is-small is-family-code'>
         <div>
           <a className='is-link has-text-grey'
-            href='https://www.npmjs.com/package/@chainsafe/ssz'>
-            @chainsafe/ssz {pkg.dependencies["@chainsafe/ssz"]}
+            href='https://www.npmjs.com/package/@chainsafe/discv5'>
+            @chainsafe/discv5 {pkg.dependencies["@chainsafe/discv5"]}
           </a>
         </div>
         <div>
