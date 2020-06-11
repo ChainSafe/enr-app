@@ -1,7 +1,7 @@
 import React from "react";
-import { ENR } from "@chainsafe/discv5/lib/enr";
+import {ENR} from "@chainsafe/discv5/lib/enr";
 import {withAlert} from "react-alert";
-import { decode } from "punycode";
+import {decode} from "punycode";
 
 type Props = {
   alert: {error: Function};
@@ -16,17 +16,14 @@ class ENRDecode extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      // enrString: '',
-      enrString: "enr:-Ku4QJsxkOibTc9FXfBWYmcdMAGwH4bnOOFb4BlTHfMdx_f0WN-u4IUqZcQVP9iuEyoxipFs7-Qd_rH_0HfyOQitc7IBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1pf1CAAAAAP__________gmlkgnY0gmlwhLAJM9iJc2VjcDI1NmsxoQL2RyM26TKZzqnUsyycHQB4jnyg6Wi79rwLXtaZXty06YN1ZHCCW8w",
+      enrString: '',
+      // enrString: "enr:-Ku4QJsxkOibTc9FXfBWYmcdMAGwH4bnOOFb4BlTHfMdx_f0WN-u4IUqZcQVP9iuEyoxipFs7-Qd_rH_0HfyOQitc7IBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1pf1CAAAAAP__________gmlkgnY0gmlwhLAJM9iJc2VjcDI1NmsxoQL2RyM26TKZzqnUsyycHQB4jnyg6Wi79rwLXtaZXty06YN1ZHCCW8w",
       decoded: undefined,
     };
   }
 
   decode() {
     const {enrString} = this.state;
-    // json file contains a single string, the enr encoded as base64
-    // const enrAsString = "enr:-Ku4QJsxkOibTc9FXfBWYmcdMAGwH4bnOOFb4BlTHfMdx_f0WN-u4IUqZcQVP9iuEyoxipFs7-Qd_rH_0HfyOQitc7IBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1pf1CAAAAAP__________gmlkgnY0gmlwhLAJM9iJc2VjcDI1NmsxoQL2RyM26TKZzqnUsyycHQB4jnyg6Wi79rwLXtaZXty06YN1ZHCCW8w";
-
     const decoded = ENR.decodeTxt(enrString);
     this.setState({decoded});
   }
@@ -40,7 +37,7 @@ class ENRDecode extends React.Component<Props, State> {
   }
 
   setInput(enrString: string) {
-    this.setState({enrString})
+    this.setState({enrString});
   }
 
   onUploadFile(file: Blob): void {
@@ -60,15 +57,16 @@ class ENRDecode extends React.Component<Props, State> {
   }
 
   render() {
-    const {decoded} = this.state;
-    console.log('decoded: ', decoded);
+    const {decoded, enrString} = this.state;
 
-    let decodedItems = [];
+    const decodedItems = [];
     if (decoded) {
       decoded.forEach((i: Uint8Array, k: string) => {
-        decodedItems.push(<>
-          <div>{k}: {i}</div>
-        </>);
+        decodedItems.push(
+          <div>
+            <em>{k}:{" "}{i}</em>
+          </div>
+        );
       });
     }
 
@@ -90,7 +88,8 @@ class ENRDecode extends React.Component<Props, State> {
                 <div className="subtitle is-4">
                   ENR To Decode
                 </div>
-                <input
+                <textarea
+                  value={enrString || ''}
                   onChange={(e) => this.setInput(e.target.value)}
                 />
               </div>
@@ -99,16 +98,17 @@ class ENRDecode extends React.Component<Props, State> {
           <div className="column">
             {decoded && 
               <div>
-                <div>signature</div>
-                {decoded.signature}
-                <div>decoded</div>
+                <div className="subtitle is-5">Decoded ENR</div>
+                <div>
+                  <em>Signature:{" "}{decoded.signature}</em>
+                </div>
                 {decodedItems}
               </div>
             }
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
