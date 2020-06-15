@@ -1,7 +1,7 @@
 import React from "react";
 import {ENR} from "@chainsafe/discv5/lib/enr";
 import {withAlert} from "react-alert";
-import {decode} from "punycode";
+import NamedOutput from "./display/NamedOutput";
 
 type Props = {
   alert: {error: Function};
@@ -16,23 +16,23 @@ class ENRDecode extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      enrString: '',
+      enrString: "",
       // enrString: "enr:-Ku4QJsxkOibTc9FXfBWYmcdMAGwH4bnOOFb4BlTHfMdx_f0WN-u4IUqZcQVP9iuEyoxipFs7-Qd_rH_0HfyOQitc7IBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1pf1CAAAAAP__________gmlkgnY0gmlwhLAJM9iJc2VjcDI1NmsxoQL2RyM26TKZzqnUsyycHQB4jnyg6Wi79rwLXtaZXty06YN1ZHCCW8w",
       decoded: undefined,
     };
   }
 
   decode() {
-    const {enrString} = this.state;
-    const decoded = ENR.decodeTxt(enrString);
-    this.setState({decoded});
+    try {
+      const {enrString} = this.state;
+      const decoded = ENR.decodeTxt(enrString);
+      this.setState({decoded});
+    } catch(e) {
+      this.handleError(e.message);
+    }
   }
 
-  handleError(error: { message: string }): void {
-    this.showError(error.message);
-  }
-
-  showError(errorMessage: string): void {
+  handleError(errorMessage: string): void {
     this.props.alert.error(errorMessage);
   }
 
@@ -51,7 +51,7 @@ class ENRDecode extends React.Component<Props, State> {
         }
       };
       reader.onerror = (e) => {
-        handleError(e);
+        handleError(e.message);
       };
     }
   }
@@ -59,19 +59,20 @@ class ENRDecode extends React.Component<Props, State> {
   render() {
     const {decoded, enrString} = this.state;
 
-    const decodedItems = [];
+    const decodedItems: JSX.Element[] = [];
+    console.log(decoded);
     if (decoded) {
+      decodedItems.push(<NamedOutput name="Signature" value={decoded && decoded.signature} />);
+      const decoder = new TextDecoder("utf-8");
       decoded.forEach((i: Uint8Array, k: string) => {
         decodedItems.push(
-          <div>
-            <em>{k}:{" "}{i}</em>
-          </div>
+          <NamedOutput name={k} value={decoder.decode(i)} />
         );
       });
     }
 
     return (
-      <div className="section is-centered">
+      <div className="section">
         <div className="container">
           <div className="columns">
             <div className="column">
@@ -82,29 +83,28 @@ class ENRDecode extends React.Component<Props, State> {
                   accept=".json"
                   onChange={(e) => e.target.files && this.onUploadFile(e.target.files[0])}
                 />
-                <button onClick={() => this.decode()}>Decode</button>
               </div>
               <div className="column">
                 <div className="subtitle is-4">
                   ENR To Decode
                 </div>
                 <textarea
-                  value={enrString || ''}
+                  value={enrString || ""}
                   onChange={(e) => this.setInput(e.target.value)}
+                  className="textarea"
+                  rows={5}
                 />
+                <br />
+                <button
+                  disabled={!enrString}
+                  onClick={() => this.decode()}
+                >Decode</button>
               </div>
             </div>
-          </div>
-          <div className="column">
-            {decoded && 
-              <div>
-                <div className="subtitle is-5">Decoded ENR</div>
-                <div>
-                  <em>Signature:{" "}{decoded.signature}</em>
-                </div>
-                {decodedItems}
-              </div>
-            }
+            <div className="column enr-output">
+              <div className="subtitle is-5">Decoded ENR</div>
+              {decodedItems}
+            </div>
           </div>
         </div>
       </div>
