@@ -49,7 +49,7 @@ class ENRDecode extends React.Component<Props, State> {
       reader.readAsText(file);
       reader.onload = (e) => {
         if (e.target && typeof e.target.result === "string") {
-          this.setState({enrString: e.target.result});
+          this.setState({enrString: e.target.result.replace(/^\""*|\""*$/g,"")});
         }
       };
       reader.onerror = (e) => {
@@ -63,9 +63,7 @@ class ENRDecode extends React.Component<Props, State> {
 
     if (decoded) {
       let decodedValue;
-      if(name === 'Signature') {
-        decodedValue = decoded.signature;
-      } else if (name === 'attnets') {
+      if (name === 'attnets') {
         decodedValue = toHexString(decoded.get('attnets'));
       } else if (name === 'eth2') {
         decodedValue = toHexString(decoded.get('eth2'));
@@ -94,6 +92,8 @@ class ENRDecode extends React.Component<Props, State> {
     console.log(decoded);
     if (decoded) {
       const decoder = new TextDecoder("utf-8");
+      decodedItems.push(<NamedOutput name={'signature'} value={toHexString(decoded.signature)} />);
+      decodedItems.push(<NamedOutput name={'seq'} value={decoded.seq.toString()} />);
       decoded.forEach((i: Uint8Array, k: string) => {
         decodedItems.push(this.getDecodedElement(k, i));
       });
@@ -108,7 +108,6 @@ class ENRDecode extends React.Component<Props, State> {
                 <div>Upload a file to populate field below (optional)</div>
                 <input
                   type="file"
-                  accept=".json"
                   onChange={(e) => e.target.files && this.onUploadFile(e.target.files[0])}
                 />
               </div>
