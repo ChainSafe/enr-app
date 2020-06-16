@@ -78,7 +78,8 @@ class ENRDecode extends React.Component<Props, State> {
       } else if (name === 'secp256k1') {
         decodedValue = toHexString(decoded.publicKey);
       } else if (name === 'udp') {
-        decodedValue = decoded.multiaddrUDP;
+        decodedValue = decoded.multiaddrUDP.toString();
+        decodedValue = decodedValue.slice(decodedValue.lastIndexOf('/') + 1);
       } else {
         // decodedValue = decode.decode(i);
       }
