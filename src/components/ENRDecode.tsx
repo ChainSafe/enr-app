@@ -2,6 +2,7 @@ import React from "react";
 import {ENR} from "@chainsafe/discv5/lib/enr";
 import {withAlert} from "react-alert";
 import NamedOutput from "./display/NamedOutput";
+import {toHexString} from "@chainsafe/ssz";
 
 type Props = {
   alert: {error: Function};
@@ -9,7 +10,7 @@ type Props = {
 
 type State = {
   enrString: string;
-  decoded: object | undefined;
+  decoded: ENR | undefined;
 };
 
 class ENRDecode extends React.Component<Props, State> {
@@ -26,6 +27,7 @@ class ENRDecode extends React.Component<Props, State> {
     try {
       const {enrString} = this.state;
       const decoded = ENR.decodeTxt(enrString);
+      console.log('decoded: ', decoded);
       this.setState({decoded});
     } catch(e) {
       this.handleError(e.message);
@@ -56,18 +58,43 @@ class ENRDecode extends React.Component<Props, State> {
     }
   }
 
+  getDecodedElement(name: string, value) {
+    const {decoded} = this.state;
+
+    if (decoded) {
+      let decodedValue;
+      if(name === 'Signature') {
+        decodedValue = decoded.signature;
+      } else if (name === 'attnets') {
+        decodedValue = toHexString(decoded.get('attnets'));
+      } else if (name === 'eth2') {
+        decodedValue = toHexString(decoded.get('eth2'));
+      } else if (name === 'id') {
+        decodedValue = value;
+      } else if (name === 'ip') {
+        decodedValue = decoded.multiaddrUDP.toString().slice(5);
+        const endPos = decodedValue.indexOf('/');
+        decodedValue = decodedValue.slice(0, endPos);
+      } else if (name === 'secp256k1') {
+        decodedValue = toHexString(decoded.publicKey);
+      } else if (name === 'udp') {
+        decodedValue = decoded.multiaddrUDP;
+      } else {
+        // decodedValue = decode.decode(i);
+      }
+      return (<NamedOutput name={name} value={decodedValue} />);
+    }
+  }
+
   render() {
     const {decoded, enrString} = this.state;
 
     const decodedItems: JSX.Element[] = [];
     console.log(decoded);
     if (decoded) {
-      decodedItems.push(<NamedOutput name="Signature" value={decoded && decoded.signature} />);
       const decoder = new TextDecoder("utf-8");
       decoded.forEach((i: Uint8Array, k: string) => {
-        decodedItems.push(
-          <NamedOutput name={k} value={decoder.decode(i)} />
-        );
+        decodedItems.push(this.getDecodedElement(k, i));
       });
     }
 

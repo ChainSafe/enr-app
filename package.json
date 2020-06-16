@@ -15,6 +15,7 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@chainsafe/discv5": "^0.2.2",
+    "@chainsafe/ssz": "^0.6.7",
     "@typescript-eslint/eslint-plugin": "^2.32.0",
     "@typescript-eslint/parser": "^2.32.0",
     "bulma": "^0.7.5",
