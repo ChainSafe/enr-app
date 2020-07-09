@@ -7,6 +7,9 @@ export default function(): JSX.Element {
         <h1 className='title is-family-code'>
           ENR-App
         </h1>
+        <p className='subtitle'>
+          View ENRs (Ethereum Name Records) (<a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-778.md">EIP-778</a>)
+        </p>
       </div>
     </div>
   );
