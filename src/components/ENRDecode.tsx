@@ -69,15 +69,20 @@ class ENRDecode extends React.Component<Props, State> {
         decodedValue = toHexString(decoded.get('eth2'));
       } else if (name === 'id') {
         decodedValue = value;
-      } else if (name === 'ip') {
-        decodedValue = decoded.multiaddrUDP.toString().slice(5);
-        const endPos = decodedValue.indexOf('/');
-        decodedValue = decodedValue.slice(0, endPos);
       } else if (name === 'secp256k1') {
         decodedValue = toHexString(decoded.publicKey);
+      } else if (name === 'ip') {
+        decodedValue = decoded.ip;
+      } else if (name === 'tcp') {
+        decodedValue = decoded.tcp;
       } else if (name === 'udp') {
-        decodedValue = decoded.multiaddrUDP.toString();
-        decodedValue = decodedValue.slice(decodedValue.lastIndexOf('/') + 1);
+        decodedValue = decoded.udp;
+      } else if (name === 'ip6') {
+        decodedValue = decoded.ip6;
+      } else if (name === 'tcp6') {
+        decodedValue = decoded.tcp6;
+      } else if (name === 'udp6') {
+        decodedValue = decoded.udp6;
       } else {
         // decodedValue = decode.decode(i);
       }
