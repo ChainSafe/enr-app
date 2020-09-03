@@ -5,7 +5,7 @@ export default function(): JSX.Element {
     <div className='section'>
       <div className='container'>
         <h1 className='title is-family-code'>
-          ENR-App
+          ENR Viewer
         </h1>
         <p className='subtitle'>
           View ENRs (Ethereum Name Records) (<a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-778.md">EIP-778</a>)

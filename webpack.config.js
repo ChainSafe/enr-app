@@ -48,7 +48,7 @@ const config = {
       filename: 'css/[name].bundle.css'
     }),
     new HtmlWebpackPlugin({
-      title: 'ENR-App | Chainsafe Systems',
+      title: 'ENR Viewer | Chainsafe Systems',
       template: 'src/index.html',
     }),
   ],

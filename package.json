@@ -10,7 +10,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --color --progress",
     "build": "cross-env NODE_ENV=production webpack --color --progress",
     "start": "serve dist",
-    "lint": "eslint --ext .tsx src/ --fix"
+    "lint": "eslint --ext .tsx src/"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
@@ -40,6 +40,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/node": "^12.0.4",
     "@types/react": "^16.8.19",
+    "@types/react-alert": "^5.2.0",
     "@types/react-dom": "^16.8.4",
     "babel-loader": "^8.0.6",
     "cross-env": "^7.0.2",

@@ -2,8 +2,8 @@ import * as React from "react";
 
 type Props = {
   name: string | undefined;
-  value: string | undefined;
-  textarea: boolean;
+  value: string | number | undefined;
+  textarea?: boolean;
 };
 
 const NamedOuput = ({name, value, textarea}: Props): JSX.Element => (
