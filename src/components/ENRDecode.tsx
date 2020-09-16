@@ -3,6 +3,7 @@ import {AlertManager, withAlert} from "react-alert";
 import {ENR} from "@chainsafe/discv5/lib/enr";
 
 import ENRFields from "./display/ENRFields";
+import ENRDerivedFields from "./display/ENRDerivedFields";
 
 type Props = {
   alert: AlertManager;
@@ -92,9 +93,17 @@ class ENRDecode extends React.Component<Props, State> {
               </div>
             </div>
             <div className="column enr-output">
-              <div className="subtitle is-5">Decoded ENR</div>
+              <div className="subtitle is-4">Decoded ENR</div>
               {
                 decoded && <ENRFields enr={decoded} />
+              }
+              {
+                decoded && (
+                  <>
+                    <div className="subtitle is-4">Derived Fields</div>
+                    <ENRDerivedFields enr={decoded} />
+                  </>
+                )
               }
             </div>
           </div>
