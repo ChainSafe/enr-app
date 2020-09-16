@@ -22,10 +22,8 @@ async function getDerivedKVs(enr: ENR): Promise<{key: string; value: DisplayValu
 export default function ENRDerivedFields({enr}: {enr: ENR}): JSX.Element {
   const [ENRDerivedFields, setENRDerivedFields] = useState(null as ({key: string; value: DisplayValue}[]) | null);
   useEffect(() => {
-    if (!ENRDerivedFields) {
-      getENRDerivedFields();
-    }
-  }, []);
+    getENRDerivedFields();
+  }, [enr]);
   const getENRDerivedFields = async (): Promise<void> => setENRDerivedFields(await getDerivedKVs(enr));
   return (
     <>
