@@ -1,9 +1,9 @@
-name: Lint
+name: Checks
 
 on: [pull_request, push]
 
 jobs:
-  Lint:
+  Checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
