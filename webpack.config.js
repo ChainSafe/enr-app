@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const { resolve } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -6,9 +7,6 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 const config = {
-  node: {
-    fs: "empty"
-  },
   mode: isProd ? 'production' : 'development',
   entry: {
     index: './src/index.tsx',
@@ -19,6 +17,9 @@ const config = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    fallback: {
+      "assert": require.resolve("assert/"),
+    }
   },
   module: {
     rules: [
@@ -50,6 +51,10 @@ const config = {
     new HtmlWebpackPlugin({
       title: 'ENR Viewer | Chainsafe Systems',
       template: 'src/index.html',
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
     }),
   ],
 };
