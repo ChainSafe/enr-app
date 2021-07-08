@@ -1,3 +1,4 @@
+/* eslint-disable max-len, react/display-name */
 import * as React from "react";
 
 import pkg from "../../package.json";
