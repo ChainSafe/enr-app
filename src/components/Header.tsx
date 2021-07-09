@@ -1,3 +1,4 @@
+/* eslint-disable max-len, react/display-name */
 import * as React from "react";
 
 export default function(): JSX.Element {

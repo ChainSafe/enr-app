@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as React from "react";
 
 export default function(): JSX.Element {
