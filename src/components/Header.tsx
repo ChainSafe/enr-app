@@ -9,7 +9,7 @@ export default function(): JSX.Element {
           ENR Viewer
         </h1>
         <p className='subtitle'>
-          View ENRs (Ethereum Name Records) (<a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-778.md">EIP-778</a>)
+          View ENRs (Ethereum Node Records) (<a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-778.md">EIP-778</a>)
         </p>
       </div>
     </div>
