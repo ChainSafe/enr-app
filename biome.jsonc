@@ -1,0 +1,67 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["@chainsafe/biomejs-config", "@chainsafe/biomejs-config/recommended", "@chainsafe/biomejs-config/esm"],
+  "vcs": {
+    "defaultBranch": "unstable"
+  },
+  "files": {
+    "include": ["src/**/*.tsx", "webpack.config.js"]
+  },
+  "formatter": {
+    "ignore": [
+      "**/dist",
+      "**/.nyc_output",
+      "./packages/*/spec-tests",
+      "**/node_modules",
+      "./packages/*/node_modules/**"
+    ]
+  },
+  "javascript": {
+    "globals": ["JSX"]
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "useNamingConvention": {
+          "level": "error",
+          "options": {
+            "strictCase": false,
+            "conventions": [
+              {
+                "selector": {
+                  "kind": "variable"
+                },
+                "formats": ["camelCase", "PascalCase", "CONSTANT_CASE"]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      "include": ["webpack.config.js"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noCommonJs": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/components/ENRDecode.tsx"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsoleLog": "off"
+          }
+        }
+      }
+    }
+  ]
+}

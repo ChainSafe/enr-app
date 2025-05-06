@@ -1,5 +1,21 @@
 @charset "utf-8";
-@import "~bulma/bulma";
+
+@forward "bulma/sass/base";
+
+@forward "bulma/sass/utilities";
+@forward "bulma/sass/form";
+@forward "bulma/sass/themes";
+@forward "bulma/sass/grid";
+@forward "bulma/sass/helpers";
+
+@forward "bulma/sass/elements/button";
+@forward "bulma/sass/elements/content";
+@forward "bulma/sass/elements/title";
+
+@forward "bulma/sass/layout/container";
+@forward "bulma/sass/layout/section";
+@forward "bulma/sass/layout/footer";
+
 
 #app {
     min-height: 100vh;
