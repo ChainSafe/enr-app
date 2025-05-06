@@ -6,7 +6,12 @@ jobs:
   Checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '22.x'
       - run: yarn install
       - run: yarn build
       - run: yarn check-types
