@@ -10,9 +10,9 @@ function toHexString(value: Uint8Array): string {
 
 type DisplayValue = string | number;
 
-function getDisplayValue(enr: ENR, key: string, value: Uint8Array): DisplayValue {
+function getDisplayValue(enr: ENR, key: string, value: Uint8Array | Uint8Array[]): DisplayValue {
   if (key === "id") {
-    return uToString(value);
+    return uToString(value as Uint8Array);
   }
 
   if (key === "secp256k1") {
@@ -27,6 +27,9 @@ function getDisplayValue(enr: ENR, key: string, value: Uint8Array): DisplayValue
     return field;
   }
 
+  if (Array.isArray(value)) {
+    return JSON.stringify(value.map((v) => uToString(v)));
+  }
   // default to assuming binary data
   return toHexString(value);
 }
