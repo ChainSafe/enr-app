@@ -1,16 +1,24 @@
 import {ENR} from "@chainsafe/enr";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 import toast from "react-hot-toast";
 
 import ENRDerivedFields from "./ENRDerivedFields";
 import ENRFields from "./ENRFields";
 
 // const initialEnrString = "enr:-Mq4QL9et8Sxj48Lv4xUConiamSJ7MNKdnbjnUdqkr342kRtDsqnuOJ57xrYNjRxSMnyp5S7JLiKiySL6yLcZ1HMwo6GAZamqfBHh2F0dG5ldHOIYAAAAAAAAACEZXRoMpBU8t3jYAAAOP__________gmlkgnY0gmlwhF4VGsuEcXVpY4KA6IlzZWNwMjU2azGhA2rSAkViWUqgxvtIn44xq3onNAjgG68SRXTv1nmKpUsZiHN5bmNuZXRzAIN0Y3CCgOiDdWRwgoDp";
-const initialEnrString = "";
 
 export default function ENRDecode(): JSX.Element {
-  const [enrString, setEnrString] = useState<string>(initialEnrString);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [enrString, setEnrString] = useState<string>(searchParams.get("q") ?? "");
   const [decoded, setDecoded] = useState<ENR | undefined>(undefined);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only trigger decode on initial load
+  useEffect(() => {
+    if (enrString) {
+      decode();
+    }
+  }, []);
 
   function handleError(errorMessage: string): void {
     toast.error(errorMessage);
@@ -32,6 +40,7 @@ export default function ENRDecode(): JSX.Element {
     try {
       const decoded = ENR.decodeTxt(enrString.trim());
       console.log("decoded: ", decoded);
+      setSearchParams({ q: enrString });
       setDecoded(decoded);
     } catch (e) {
       handleError((e as Error).message);
