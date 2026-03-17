@@ -3,6 +3,14 @@ export default function Header() {
     <header className="border-b border-border py-6 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto flex items-center justify-between">
         <div>
+          <a
+            href="https://lodestar.chainsafe.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10px] font-medium uppercase tracking-[0.15em] text-text-muted hover:text-text-secondary transition-colors"
+          >
+            Lodestar
+          </a>
           <h1 className="text-xl font-semibold font-mono tracking-tight text-text-primary">ENR Viewer</h1>
           <p className="text-sm text-text-secondary mt-0.5">
             Decode{" "}
