@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+  --color-surface: #0c0c12;
+  --color-surface-raised: #14141e;
+  --color-surface-hover: #1a1a28;
+  --color-border: #2a2a3a;
+  --color-border-bright: #3a3a50;
+  --color-accent: #22d3ee;
+  --color-accent-dim: #164e63;
+  --color-text-primary: #e4e4ed;
+  --color-text-secondary: #9595a8;
+  --color-text-muted: #5a5a70;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+/* Textarea focus ring */
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-accent-dim), 0 0 0 4px rgba(34, 211, 238, 0.15);
+}
+
+/* Smooth field appearance */
+@keyframes field-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.field-row {
+  animation: field-in 0.2s ease-out both;
+}
