@@ -17,7 +17,7 @@ function getDisplayValue(enr: ENR, key: string, value: Uint8Array | Uint8Array[]
   }
   if (["ip", "tcp", "udp", "quic", "ip6", "tcp6", "udp6", "quic6"].includes(key)) {
     const field = enr[key as "ip" | "tcp" | "udp" | "quic"];
-    if (!field) {
+    if (field == null) {
       throw new Error("Field not found.");
     }
     return field;
