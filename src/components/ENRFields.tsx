@@ -8,6 +8,16 @@ function toHexString(value: Uint8Array): string {
 
 type DisplayValue = string | number;
 
+function formatNestedArray(value: unknown[]): string {
+  return JSON.stringify(
+    value.map((item) => {
+      if (item instanceof Uint8Array) return toHexString(item);
+      if (Array.isArray(item)) return formatNestedArray(item);
+      return String(item);
+    })
+  );
+}
+
 function getDisplayValue(enr: ENR, key: string, value: Uint8Array | Uint8Array[]): DisplayValue {
   if (key === "id") {
     return uToString(value as Uint8Array);
@@ -23,7 +33,7 @@ function getDisplayValue(enr: ENR, key: string, value: Uint8Array | Uint8Array[]
     return field;
   }
   if (Array.isArray(value)) {
-    return JSON.stringify(value.map((v) => uToString(v)));
+    return formatNestedArray(value);
   }
   return toHexString(value);
 }
