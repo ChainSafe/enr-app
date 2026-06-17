@@ -18,6 +18,25 @@ function formatNestedArray(value: unknown[]): string {
   );
 }
 
+function isPrintableAscii(value: Uint8Array): boolean {
+  for (const byte of value) {
+    if (byte < 0x20 || byte > 0x7e) return false;
+  }
+  return true;
+}
+
+// EIP-7636 "client" entry: an RLP list [ClientName, Version, (BuildVersion)] whose elements
+// are ASCII strings (e.g. ["Lighthouse", "8.1.3"]). Render them as text so they are
+// human-readable instead of raw hex, falling back to hex for any non-conforming element.
+function formatClientInfo(value: unknown[]): string {
+  return JSON.stringify(
+    value.map((item) => {
+      if (item instanceof Uint8Array) return isPrintableAscii(item) ? uToString(item, "utf8") : toHexString(item);
+      return String(item);
+    })
+  );
+}
+
 function getDisplayValue(enr: ENR, key: string, value: Uint8Array | Uint8Array[]): DisplayValue {
   if (key === "id") {
     return uToString(value as Uint8Array);
@@ -31,6 +50,9 @@ function getDisplayValue(enr: ENR, key: string, value: Uint8Array | Uint8Array[]
       throw new Error("Field not found.");
     }
     return field;
+  }
+  if (key === "client" && Array.isArray(value)) {
+    return formatClientInfo(value);
   }
   if (Array.isArray(value)) {
     return formatNestedArray(value);
